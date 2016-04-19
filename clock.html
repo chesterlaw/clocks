@@ -1,0 +1,45 @@
+<html>
+  <style>
+    span {
+      font-size: 3rem;
+    }
+    span:after {
+      content: ":";
+      padding: 0 0.1rem;
+    }
+    span:last-of-type:after {
+      content: '';
+    }
+  </style>
+
+  <body>
+    <span class='hours'></span>
+    <span class='minutes'></span>
+    <span class='seconds'></span>
+    <span class='milliseconds'></span>
+  </body>
+
+<script>
+var hoursLabel= document.querySelector('.hours');
+var minutesLabel = document.querySelector('.minutes');
+var secondsLabel = document.querySelector('.seconds');
+var millisecondsLabel = document.querySelector('.milliseconds');
+
+function formatToTwoPlaces(number) {
+  var a = "0" + number;
+  return a.slice(-2);
+}
+
+(function updateLabel() {
+  var date = new Date();
+  hoursLabel.innerHTML = formatToTwoPlaces(date.getHours());
+  minutesLabel.innerHTML = formatToTwoPlaces(date.getMinutes());
+  secondsLabel.innerHTML = formatToTwoPlaces(date.getSeconds());
+  var milliseconds = Math.round(date.getMilliseconds()/10);
+  millisecondsLabel.innerHTML = formatToTwoPlaces(milliseconds);
+  requestAnimationFrame(updateLabel);
+})();
+
+</script>
+</html>
+
