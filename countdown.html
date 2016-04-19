@@ -1,0 +1,47 @@
+<html>
+<style>
+  span:after {
+    content: ':';
+    padding: 0 0.1rem;
+  }
+
+  span:last-of-type:after {
+    content: '';
+  }
+</style>
+<body>
+  <span class='hours'></span>
+  <span class='minutes'></span>
+  <span class='seconds'></span>
+  <span class='milliseconds'></span>
+<script>
+
+var countdownAmount = 600000; // in ms.
+var targetTime = Date.now() + countdownAmount;
+
+var hoursLabel = document.querySelector('.hours');
+var minutesLabel = document.querySelector('.minutes');
+var secondsLabel = document.querySelector('.seconds');
+var millisecondsLabel = document.querySelector('.milliseconds');
+
+function formatToTwoPlaces(number) {
+  var a = "0" + number;
+  return a.slice(-2);
+}
+
+(function updateLabels() {
+  var millisecondsRemaining = targetTime - Date.now();
+  var timezoneOffset = (new Date()).getTimezoneOffset() * 60000;
+  var timeRemaining = new Date(millisecondsRemaining + timezoneOffset);
+  hoursLabel.innerHTML = formatToTwoPlaces(timeRemaining.getHours());
+  minutesLabel.innerHTML = formatToTwoPlaces(timeRemaining.getMinutes());
+  secondsLabel.innerHTML = formatToTwoPlaces(timeRemaining.getSeconds());
+  var milliseconds = Math.round(timeRemaining.getMilliseconds()/10);
+  millisecondsLabel.innerHTML = formatToTwoPlaces(milliseconds);
+  requestAnimationFrame(updateLabels);
+})();
+
+</script>
+</body>
+</html>
+
